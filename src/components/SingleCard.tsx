@@ -12,11 +12,18 @@ const SingleCard: React.FC<Props> = ({ recipe }) => {
 
 	return (
 		<>
-			<div className='border-2 border-amber-400 rounded-2xl flex flex-col h-30'>
-				<h1 className='bg-amber-300 rounded-t-xl px-2 py-2'>{recipe.name}</h1>
-				<p className='px-2'>{recipe.description}</p>
-
-				<Link to={`/recipes/${recipe.id}`}>zum Rezept</Link>
+			<div
+				className='border-2 border-lime-600 rounded-t-xl pb-3 w-1/3 md:w-full md:my-5'
+				key={recipe.id}
+			>
+				<h3 className='bg-lime-200 px-3 py-2 rounded-t-xl'>{recipe.name}</h3>
+				<p className='px-3 py-2'>{recipe.description}</p>
+				<Link
+					to={`/recipes/${recipe.id}`}
+					className='border-1 border-lime-800 rounded px-4 py-1 bg-lime-200 hover:bg-lime-400 hover:ease-in-out hover:delay-100 mx-3 '
+				>
+					zum Rezept
+				</Link>
 			</div>
 		</>
 	);

@@ -25,7 +25,7 @@ export interface IRecipes {
 	servings: number;
 	instructions: string;
 	description: string;
-    category_id?:string;
+	category_id?: string;
 	ingredients: [
 		{
 			id: string;
@@ -52,7 +52,6 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	// useStates
 	const [categories, setCategories] = useState<IData>([]);
 
-	const [recipes, setRecipes] = useState<IRecipes>();
 	const [ingredients, setIngredients] = useState<IIngredients>();
 
 	//useEffect
@@ -69,7 +68,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		fetchData();
 	}, []);
 
-	console.log(categories);
+	console.log("nach UseEffect: ", categories);
 
 	return (
 		<mainContext.Provider value={{ categories, ingredients }}>

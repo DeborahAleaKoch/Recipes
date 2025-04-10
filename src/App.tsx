@@ -13,6 +13,7 @@ import LoginPage from "./pages/LoginPage";
 import RecipeDetail from "./pages/RecipeDetail";
 import NotFound from "./pages/NotFound";
 import CreateRecipe from "./pages/CreateRecipe";
+import EditRecipe from "./pages/EditRecipe";
 
 // import { useEffect } from "react";
 // import supabase from "./utils/supabase";
@@ -27,6 +28,7 @@ function App() {
 				<Route path='loginpage' element={<LoginPage />} />
 				<Route path='recipes/:recipeDetailParam' element={<RecipeDetail />} />
 				<Route path='createrecipe' element={<CreateRecipe />} />
+				<Route path={`editrecipe`} element={<EditRecipe />} />
 				<Route path='*' element={<NotFound />} />
 			</Route>
 		)

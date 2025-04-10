@@ -3,7 +3,7 @@ import { IRecipes } from "../context/MainProvider";
 import supabase from "../utils/supabase";
 import { useState } from "react";
 
-type NewRecipe = Omit<IRecipes, "ingredients">;
+export type NewRecipe = Omit<IRecipes, "ingredients">;
 
 const CreateRecipe = () => {
 	const navigate = useNavigate();
@@ -39,10 +39,12 @@ const CreateRecipe = () => {
 	};
 
 	return (
-		<>
-			<h1>Hier kann ein eigenen Rezept hochgelden werden:</h1>
-			<form action='' className='' onSubmit={handleSubmit}>
-				<div className=''>
+		<div className='mx-36'>
+			<h1 className='text-2xl underline text-center mb-7'>
+				Hier kannst du dein eigenes Rezept hochladen:
+			</h1>
+			<form action='' className='flex flex-col' onSubmit={handleSubmit}>
+				<div className='grid grid-cols-2 text-right  gap-3 '>
 					<label htmlFor=''>Name</label>
 					<input
 						type='text'
@@ -65,8 +67,7 @@ const CreateRecipe = () => {
 						onChange={(event) => setServingsInput(Number(event.target.value))}
 					/>
 					<label htmlFor=''>Anleitung</label>
-					<input
-						type='text'
+					<textarea
 						name=''
 						id=''
 						className='border-1 rounded'
@@ -79,6 +80,7 @@ const CreateRecipe = () => {
 						id='categorie'
 						value={categorieInput}
 						onChange={(event) => setCategorieInput(event.target.value)}
+						className='border-1 rounded'
 					>
 						<option value='df623a8e-7b10-4590-902f-7eb2ce2e1a91'>Drink</option>
 						<option value='0818ba22-48c2-4d62-a3a1-d813ddbb4a34'>Salad</option>
@@ -95,9 +97,11 @@ const CreateRecipe = () => {
 					</select>
 				</div>
 
-				<button type='submit'>Rezept speichern</button>
+				<button type='submit' className='text-xl my-3 hover:text-lime-600'>
+					Rezept speichern
+				</button>
 			</form>
-		</>
+		</div>
 	);
 };
 
