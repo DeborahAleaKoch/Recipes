@@ -29,7 +29,7 @@ export const FavouriteRecipes: React.FC = () => {
 			<div className='flex gap-5 items-center'>
 				{recipes
 					.map((recipe) => {
-						return <SingleCard recipe={recipe} />;
+						return <SingleCard recipe={recipe} key={recipe.id} />;
 					})
 					.slice(0, 3)}
 			</div>
