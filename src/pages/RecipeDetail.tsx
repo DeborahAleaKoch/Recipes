@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import supabase from "../utils/supabase";
 
 import { IRecipes } from "../context/MainProvider";
-import EditRecipe from "./EditRecipe";
+import EditRecipe from "../components/EditRecipe";
 
 const RecipeDetail = () => {
 	const navigate = useNavigate();
