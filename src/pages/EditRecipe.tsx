@@ -1,35 +1,27 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import {  useState } from "react";
+
 import { IRecipes } from "../context/MainProvider";
 import supabase from "../utils/supabase";
 
-const EditRecipe = () => {
-	const navigate = useNavigate();
+interface Props {
+	recipe: IRecipes;
+    stopEditing: ()=> void
+}
 
-	const [recipeData, setRecipeData] = useState<IRecipes | null>(null);
-	const [isEditing, setIsEditing] = useState<boolean>(false);
-	const [newRecipeName, setNewRecipeName] = useState<string>("");
-	const [newServingNr, setNewServingNr] = useState<number>();
-	const [newInstructions, setNewInstructions] = useState<string>("");
-	const [newDescription, setNewDescription] = useState<string>("");
-	const [categorie, setCategorie] = useState<string>("");
+const EditRecipe: React.FC<Props> = ({ recipe, stopEditing }) => {
+	
 
-	const { idParam } = useParams();
-
-	const fetchData = async () => {
-		const response = await supabase
-			.from("recipes")
-			.select("*")
-			.eq("id", idParam);
-		setRecipeData(response.data?.[0]);
-		setNewServingNr(response?.data?.[0].servings);
-		setNewDescription(response.data?.[0].description);
-		setNewInstructions(response.data?.[0].instructions);
-	};
-
-	useEffect(() => {
-		fetchData();
-	}, []);
+	const [newRecipeName, setNewRecipeName] = useState<string>(recipe.name);
+	const [newServingNr, setNewServingNr] = useState<number>(recipe.servings);
+	const [newInstructions, setNewInstructions] = useState<string>(
+		recipe.instructions
+	);
+	const [newDescription, setNewDescription] = useState<string>(
+		recipe.description
+	);
+	const [categorie, setCategorie] = useState<string | undefined>(
+		recipe.category_id
+	);
 
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
@@ -41,44 +33,19 @@ const EditRecipe = () => {
 				description: newDescription,
 				servings: newServingNr,
 				instructions: newInstructions,
+                category_id:categorie,
+                ingredients: recipe.ingredients
 			})
-			.eq("id", idParam);
+			.eq("id", recipe.id);
 		if (insertError) {
 			console.warn("Fehler beim hinzufügen", insertError);
 		} else {
 			console.log("Rezept wurde erfolgreich geändert.");
-			navigate(`/${idParam}`);
+			stopEditing()
+            
 		}
 	};
-
-	async function handleSave() {
-		if (recipeData && newRecipeName !== recipeData.name) {
-			const { error } = await supabase
-				.from("recipes")
-				.update({ name: newRecipeName })
-				.eq("id", recipeData.id);
-
-			if (error) {
-				console.error("Fehler beim speichern", error);
-			} else {
-			}
-		}
-		setIsEditing(false);
-	}
-
-	function handleClick() {
-		if (recipeData) {
-			console.log("hallo, ich wurde geklickt");
-
-			setNewRecipeName(recipeData.name);
-			setNewDescription(recipeData.description);
-			setNewInstructions(recipeData.instructions);
-			setNewServingNr(recipeData.servings);
-			
-			setIsEditing(true);
-		}
-	}
-
+	
 	return (
 		<>
 			<div className='mx-36'>
@@ -120,7 +87,7 @@ const EditRecipe = () => {
 						<select
 							name='categorie'
 							id='categorie'
-							value={recipeData?.category_id}
+							value={categorie}
 							onChange={(e) => setCategorie(e.target.value)}
 							className='border-1 rounded'
 						>

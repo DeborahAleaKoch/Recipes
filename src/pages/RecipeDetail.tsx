@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import supabase from "../utils/supabase";
 
 import { IRecipes } from "../context/MainProvider";
@@ -12,8 +12,7 @@ const RecipeDetail = () => {
 	// console.log(recipeDetailParam);
 
 	const [recipeDetail, setRecipeDetail] = useState<IRecipes>();
-
-	
+	const [editing, setEditing] = useState<boolean>(false);
 
 	const fetchData = async () => {
 		const response = await supabase
@@ -28,7 +27,7 @@ const RecipeDetail = () => {
 	//hier neuer Fetch für die Detailansicht
 	useEffect(() => {
 		fetchData();
-	}, [recipeDetailParam]);
+	}, [recipeDetailParam,editing]);
 	console.log(recipeDetail);
 
 	if (!recipeDetail) {
@@ -40,11 +39,14 @@ const RecipeDetail = () => {
 			.from("recipes")
 			.delete()
 			.eq("id", recipeDetail.id);
-
+            console.log(response);
+            
 		navigate("/home");
 	};
 
-	
+	if (editing === true) {
+		return <EditRecipe recipe={recipeDetail} stopEditing={()=>setEditing(false)}/>;
+	}
 
 	return (
 		<>
@@ -68,12 +70,13 @@ const RecipeDetail = () => {
 					>
 						entfernen
 					</button>
-					<Link
-						to={`/editrecipe`}
+
+					<button
 						className='border-2 border-yellow-500 bg-yellow-200 rounded-2xl px-3 py-1 hover:bg-yellow-400 hover:ease-in-out hover:delay-100 mt-5'
+						onClick={() => setEditing(true)}
 					>
 						bearbeiten
-					</Link>
+					</button>
 				</div>
 			</div>
 		</>

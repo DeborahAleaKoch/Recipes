@@ -21,10 +21,10 @@ const Recipes = () => {
 							<div
 								onClick={() => setSelectedCategory(categorie)}
 								key={categorie.id}
-								className={`border-1 border-lime-300 bg-lime-200 px-3 py-1 rounded-xl ${
+								className={`border-1 border-slate-300  px-3 py-1 rounded-xl hover:cursor-pointer mb-5 ${
 									selectedCategory?.id === categorie.id
-										? "bg-rose-200"
-										: "bg-lime-200"
+										? "bg-rose-300"
+										: "bg-gray-200"
 								}`}
 							>
 								{categorie.name}
@@ -32,15 +32,21 @@ const Recipes = () => {
 						);
 					})}
 				</div>
+				
 				{!selectedCategory && (
-					<div className="mx-10 my-5">
+					<div className='mx-10 my-5'>
+						
 						{categories?.map((entry) =>
-							entry.recipes.map((recipe) => <SingleCard recipe={recipe} />)
+							entry.recipes.map((recipe) => (
+								<SingleCard recipe={recipe} key={recipe.id} />
+							))
 						)}
 					</div>
 				)}
 				{selectedCategory?.recipes.map((entry) => (
-					<SingleCard recipe={entry} />
+					<div className='mx-5 '>
+						<SingleCard recipe={entry} key={entry.id} />
+					</div>
 				))}
 			</section>
 		</>

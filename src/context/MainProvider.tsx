@@ -68,7 +68,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 		fetchData();
 	}, []);
 
-	console.log("nach UseEffect: ", categories);
+	// console.log("MainProvider - nach UseEffect: ", categories);
 
 	return (
 		<mainContext.Provider value={{ categories, ingredients }}>
