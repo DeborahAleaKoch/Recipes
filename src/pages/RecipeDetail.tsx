@@ -27,7 +27,7 @@ const RecipeDetail = () => {
 	//hier neuer Fetch für die Detailansicht
 	useEffect(() => {
 		fetchData();
-	}, [recipeDetailParam,editing]);
+	}, [recipeDetailParam, editing]);
 	console.log(recipeDetail);
 
 	if (!recipeDetail) {
@@ -39,13 +39,19 @@ const RecipeDetail = () => {
 			.from("recipes")
 			.delete()
 			.eq("id", recipeDetail.id);
-            console.log(response);
-            
+		console.log(response);
+
 		navigate("/home");
 	};
 
 	if (editing === true) {
-		return <EditRecipe recipe={recipeDetail} stopEditing={()=>setEditing(false)}/>;
+		return (
+			<EditRecipe
+				recipe={recipeDetail}
+				stopEditing={() => setEditing(false)}
+				updateRecipe={fetchData}
+			/>
+		);
 	}
 
 	return (

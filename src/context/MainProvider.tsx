@@ -2,6 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 import supabase from "../utils/supabase";
+import { IUser } from "../pages/Profile";
 
 //Interface
 export type IData = Category[];
@@ -14,8 +15,8 @@ export interface Category {
 export interface IIngredients {
 	id: string;
 	name: string;
-	unit: string;
-	quantity: number;
+	unit: string | undefined;
+	quantity: number | undefined;
 	additional_info?: string;
 }
 
@@ -26,32 +27,32 @@ export interface IRecipes {
 	instructions: string;
 	description: string;
 	category_id?: string;
-	ingredients: [
-		{
-			id: string;
-			name: string;
-			unit: string;
-			quantity: number;
-			additional_info?: string;
-		}
-	];
+	ingredients: IIngredients[];
 }
 
 export interface RecipesContext {
 	categories: IData | undefined;
 	ingredients: IIngredients | undefined;
+	user: IUser | undefined;
+	setUser: (value:IUser) =>void
+	
 }
 //MainContext
 //noch passendes Interface in Generics
-export const mainContext = createContext<RecipesContext>({
-	categories: undefined,
-	ingredients: undefined,
-});
+export const mainContext = createContext<RecipesContext|null>(null);
+
+//das stand erst im Context:
+//{
+// 	categories: undefined,
+// 	ingredients: undefined,
+// 	user: undefined
+// }
 
 const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	// useStates
-	const [categories, setCategories] = useState<IData>([]);
+	const [user, setUser] = useState<IUser>();
 
+	const [categories, setCategories] = useState<IData>([]);
 	const [ingredients, setIngredients] = useState<IIngredients>();
 
 	//useEffect
@@ -71,7 +72,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	// console.log("MainProvider - nach UseEffect: ", categories);
 
 	return (
-		<mainContext.Provider value={{ categories, ingredients }}>
+		<mainContext.Provider value={{ categories, ingredients, user, setUser }}>
 			{children}
 		</mainContext.Provider>
 	);

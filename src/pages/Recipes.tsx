@@ -32,10 +32,9 @@ const Recipes = () => {
 						);
 					})}
 				</div>
-				
+
 				{!selectedCategory && (
 					<div className='mx-10 my-5'>
-						
 						{categories?.map((entry) =>
 							entry.recipes.map((recipe) => (
 								<SingleCard recipe={recipe} key={recipe.id} />
@@ -44,7 +43,7 @@ const Recipes = () => {
 					</div>
 				)}
 				{selectedCategory?.recipes.map((entry) => (
-					<div className='mx-5 '>
+					<div className='mx-5 ' key={entry.id}>
 						<SingleCard recipe={entry} key={entry.id} />
 					</div>
 				))}

@@ -1,16 +1,16 @@
-import {  useState } from "react";
+import { useState } from "react";
 
 import { IRecipes } from "../context/MainProvider";
 import supabase from "../utils/supabase";
+import EditIngredients from "./EditIngredients";
 
 interface Props {
 	recipe: IRecipes;
-    stopEditing: ()=> void
+	stopEditing: () => void;
+	updateRecipe: () => void;
 }
 
-const EditRecipe: React.FC<Props> = ({ recipe, stopEditing }) => {
-	
-
+const EditRecipe: React.FC<Props> = ({ recipe, stopEditing, updateRecipe }) => {
 	const [newRecipeName, setNewRecipeName] = useState<string>(recipe.name);
 	const [newServingNr, setNewServingNr] = useState<number>(recipe.servings);
 	const [newInstructions, setNewInstructions] = useState<string>(
@@ -33,19 +33,18 @@ const EditRecipe: React.FC<Props> = ({ recipe, stopEditing }) => {
 				description: newDescription,
 				servings: newServingNr,
 				instructions: newInstructions,
-                category_id:categorie,
-                ingredients: recipe.ingredients
+				category_id: categorie,
+				// ingredients: recipe.ingredients
 			})
 			.eq("id", recipe.id);
 		if (insertError) {
 			console.warn("Fehler beim hinzufügen", insertError);
 		} else {
 			console.log("Rezept wurde erfolgreich geändert.");
-			stopEditing()
-            
+			stopEditing();
 		}
 	};
-	
+
 	return (
 		<>
 			<div className='mx-36'>
@@ -110,6 +109,7 @@ const EditRecipe: React.FC<Props> = ({ recipe, stopEditing }) => {
 						</select>
 					</div>
 
+					<EditIngredients recipe={recipe} updateRecipe={updateRecipe} />
 					<button type='submit' className='text-xl my-3 hover:text-lime-600'>
 						Rezept speichern
 					</button>
