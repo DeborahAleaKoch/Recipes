@@ -61,7 +61,7 @@ const Profile = () => {
 		}
 		setIsEditing(false);
 	}
-	console.log("debo:", profile);
+	// console.log("debo:", profile);
 
 	return (
 		<>

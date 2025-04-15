@@ -40,14 +40,14 @@ export interface RecipesContext {
 }
 //MainContext
 //noch passendes Interface in Generics
-export const mainContext = createContext<RecipesContext | null>(null);
-
-//das stand erst im Context:
-//{
-// 	categories: undefined,
-// 	ingredients: undefined,
-// 	user: undefined
-// }
+export const mainContext = createContext<RecipesContext>({
+	categories: undefined,
+	ingredients: undefined,
+	user: undefined,
+	setUser: () => {},
+	isLoggedIn: false,
+	setIsLoggedIn: () => {},
+});
 
 const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	// useStates
