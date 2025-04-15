@@ -34,12 +34,13 @@ export interface RecipesContext {
 	categories: IData | undefined;
 	ingredients: IIngredients | undefined;
 	user: IUser | undefined;
-	setUser: (value:IUser) =>void
-	
+	setUser: (value: IUser) => void;
+	isLoggedIn: boolean;
+	setIsLoggedIn: (value: boolean) => void;
 }
 //MainContext
 //noch passendes Interface in Generics
-export const mainContext = createContext<RecipesContext|null>(null);
+export const mainContext = createContext<RecipesContext | null>(null);
 
 //das stand erst im Context:
 //{
@@ -51,6 +52,7 @@ export const mainContext = createContext<RecipesContext|null>(null);
 const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	// useStates
 	const [user, setUser] = useState<IUser>();
+	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
 	const [categories, setCategories] = useState<IData>([]);
 	const [ingredients, setIngredients] = useState<IIngredients>();
@@ -72,7 +74,16 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 	// console.log("MainProvider - nach UseEffect: ", categories);
 
 	return (
-		<mainContext.Provider value={{ categories, ingredients, user, setUser }}>
+		<mainContext.Provider
+			value={{
+				categories,
+				ingredients,
+				user,
+				setUser,
+				isLoggedIn,
+				setIsLoggedIn,
+			}}
+		>
 			{children}
 		</mainContext.Provider>
 	);

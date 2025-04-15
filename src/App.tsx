@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import CreateRecipe from "./pages/CreateRecipe";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
+import ProtectedRoute from "./protectedRouter/ProtectedRoute";
 
 // import { useEffect } from "react";
 // import supabase from "./utils/supabase";
@@ -28,9 +29,26 @@ function App() {
 				<Route path='recipes' element={<Recipes />} />
 				<Route path='loginpage' element={<LoginPage />} />
 				<Route path='recipes/:recipeDetailParam' element={<RecipeDetail />} />
-				<Route path='createrecipe' element={<CreateRecipe />} />
-				<Route path='profile' element={<Profile />} />
 				<Route path='signup' element={<SignUp />} />
+
+				<Route
+					path='createrecipe'
+					element={
+						<ProtectedRoute>
+							<CreateRecipe />
+						</ProtectedRoute>
+					}
+				/>
+
+				<Route
+					path='profile'
+					element={
+						<ProtectedRoute>
+							<Profile />
+						</ProtectedRoute>
+					}
+				/>
+
 				<Route path='*' element={<NotFound />} />
 			</Route>
 		)
