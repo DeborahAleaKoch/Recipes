@@ -58,12 +58,14 @@ const SignUp = () => {
 				console.warn("Sign up hat nicht funktioniert", error);
 			} else {
 				console.log(data);
+				navigate("/profile");
 			}
-			// navigate("/profile");
+		
 		} catch (error) {
 			console.warn(error);
 		}
 	};
+    
 	return (
 		<>
 			<form onSubmit={handleSignUp}>

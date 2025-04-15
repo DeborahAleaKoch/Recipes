@@ -29,9 +29,9 @@ function App() {
 				<Route path='loginpage' element={<LoginPage />} />
 				<Route path='recipes/:recipeDetailParam' element={<RecipeDetail />} />
 				<Route path='createrecipe' element={<CreateRecipe />} />
-				<Route path='*' element={<NotFound />} />
 				<Route path='profile' element={<Profile />} />
 				<Route path='signup' element={<SignUp />} />
+				<Route path='*' element={<NotFound />} />
 			</Route>
 		)
 	);

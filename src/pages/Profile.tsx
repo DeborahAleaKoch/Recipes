@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import supabase from "../utils/supabase";
+import NotFound from "./NotFound";
 
 export interface IUser {
 	id: number;
@@ -26,7 +27,8 @@ const Profile = () => {
 		if (error) {
 			console.warn(error, "Hier ist was schiefgelaufen beim fetch");
 		} else {
-			setProfile(user?.[0] || null);
+			setProfile(user?.[0]);
+			console.log(user?.[0]);
 		}
 		console.log(user);
 	};
@@ -59,10 +61,11 @@ const Profile = () => {
 		}
 		setIsEditing(false);
 	}
+	console.log("debo:", profile);
 
 	return (
 		<>
-			{profile && (
+			{profile ? (
 				<div>
 					<h2>Profile</h2>
 					<div onDoubleClick={handleDoubleClick}>
@@ -82,6 +85,8 @@ const Profile = () => {
 					<p>Lastname: {profile.lastname}</p>
 					{isEditing && <button onClick={handleSave}>save</button>}
 				</div>
+			) : (
+				<NotFound />
 			)}
 		</>
 	);
