@@ -45,7 +45,7 @@ const EditIngredients: React.FunctionComponent<Props> = ({
 
 	return (
 		<div className='mt-3'>
-			<div className='border-1 rounded px-2 py-1'>
+			<div className='text-gray-400 rounded px-2 py-1'>
 				{recipe.ingredients.map((ingredient) => {
 					return (
 						<>

@@ -57,7 +57,7 @@ const Ingredient: React.FC<Props> = ({
 	};
 
 	return (
-		<div className='my-1 flex gap-2 justify-end'>
+		<div className='my-1 flex gap-2 justify-end text-black'>
 			<input
 				type='text'
 				value={ingredient.name}
