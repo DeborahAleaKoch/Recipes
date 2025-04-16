@@ -28,9 +28,9 @@ const Profile = () => {
 			console.warn(error, "Hier ist was schiefgelaufen beim fetch");
 		} else {
 			setProfile(user?.[0]);
-			console.log(user?.[0]);
+			// console.log(user?.[0]);
 		}
-		console.log(user);
+		// console.log(user);
 	};
 
 	useEffect(() => {

@@ -33,6 +33,7 @@ export interface IRecipes {
 export interface RecipesContext {
 	categories: IData | undefined;
 	ingredients: IIngredients | undefined;
+	setIngredients: (ingredients: IIngredients) => void;
 	user: IUser | undefined;
 	setUser: (value: IUser) => void;
 	isLoggedIn: boolean;
@@ -43,6 +44,7 @@ export interface RecipesContext {
 export const mainContext = createContext<RecipesContext>({
 	categories: undefined,
 	ingredients: undefined,
+	setIngredients: () => {},
 	user: undefined,
 	setUser: () => {},
 	isLoggedIn: false,
@@ -66,7 +68,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 			if (resp) {
 				setCategories(resp.data as IData);
 			}
-			console.log(resp);
+			// console.log(resp);
 		};
 		fetchData();
 	}, []);
@@ -82,6 +84,7 @@ const MainProvider = ({ children }: { children: React.ReactNode }) => {
 				setUser,
 				isLoggedIn,
 				setIsLoggedIn,
+				setIngredients,
 			}}
 		>
 			{children}

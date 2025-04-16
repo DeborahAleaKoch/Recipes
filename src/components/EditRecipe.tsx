@@ -34,7 +34,7 @@ const EditRecipe: React.FC<Props> = ({ recipe, stopEditing, updateRecipe }) => {
 				servings: newServingNr,
 				instructions: newInstructions,
 				category_id: categorie,
-				// ingredients: recipe.ingredients
+				// ingredients: recipe.ingredients,
 			})
 			.eq("id", recipe.id);
 		if (insertError) {
@@ -110,7 +110,7 @@ const EditRecipe: React.FC<Props> = ({ recipe, stopEditing, updateRecipe }) => {
 					</div>
 
 					<EditIngredients recipe={recipe} updateRecipe={updateRecipe} />
-					<button type='submit' className='text-xl my-3 hover:text-lime-600'>
+					<button type='submit' className='text-xl my-3 hover:text-pink-600'>
 						Rezept speichern
 					</button>
 				</form>
