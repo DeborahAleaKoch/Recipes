@@ -19,6 +19,8 @@ const Profile = () => {
 	const [newFirstName, setNewFirstName] = useState<string>("");
 	const [newLastName, setNewLasttName] = useState<string>("");
 
+	const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+
 	const fetchData = async () => {
 		const { data: profile } = await supabase.auth.getUser();
 
@@ -40,6 +42,29 @@ const Profile = () => {
 		fetchData();
 	}, []);
 
+	const uploadPhoto = async () => {
+		if (!profilePhoto) return null;
+
+		// das ist genauso wenn man e.target.value
+		const fileName = profilePhoto.name;
+		const { data, error } = await supabase.storage
+			.from("profile-img")
+			.upload(fileName, profilePhoto);
+		console.log(data);
+		console.log(error);
+
+		if (error) {
+			console.warn("fehler beim upload des Photos in signUp!");
+			return null;
+		}
+
+		const photoUrl = supabase.storage.from("profile-img").getPublicUrl(fileName)
+			.data.publicUrl;
+		console.log(photoUrl);
+
+		return photoUrl;
+	};
+
 	function handleDoubleClick() {
 		if (profile) {
 			setNewUserName(profile.username);
@@ -51,6 +76,11 @@ const Profile = () => {
 
 	async function handleSave() {
 		const { data: user } = await supabase.auth.getUser();
+
+		const uploadedImgUrl = await uploadPhoto();
+		if (!uploadedImgUrl) {
+			return null;
+		}
 
 		if (profile && newUserName !== profile.username) {
 			const { error } = await supabase
@@ -99,6 +129,12 @@ const Profile = () => {
 			{profile ? (
 				<div className='text-center m-4 text-gray-400 h-screen'>
 					<h2 className='text-3xl underline mb-2'>Profile</h2>
+					<img
+						src={profile.img_url}
+						alt='hier könnte dein Avatar sein'
+						className=''
+					/>
+
 					<div
 						onDoubleClick={handleDoubleClick}
 						className='flex flex-col items-center justify-center gap-3'
@@ -147,10 +183,22 @@ const Profile = () => {
 								<p>{profile.lastname}</p>
 							)}
 						</div>
+
+						<div>
+							<input
+								type='file'
+								accept='image/*'
+								onChange={(e) => {
+									if (e.target.files) {
+										setProfilePhoto(e.target.files[0]);
+									}
+								}}
+								className='border-1 border-pink-200 rounded px-3 py-1 hover:bg-pink-300'
+							/>
+							<button onClick={handleSave}>Hochladen</button>
+						</div>
 					</div>
 
-					{/* <p>Firstname: {profile.firstname}</p>
-					<p>Lastname: {profile.lastname}</p> */}
 					{isEditing && (
 						<button
 							onClick={handleSave}
