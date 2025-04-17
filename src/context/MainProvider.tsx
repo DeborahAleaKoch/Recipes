@@ -28,6 +28,7 @@ export interface IRecipes {
 	description: string;
 	category_id?: string;
 	ingredients: IIngredients[];
+	img_url: string;
 }
 
 export interface RecipesContext {

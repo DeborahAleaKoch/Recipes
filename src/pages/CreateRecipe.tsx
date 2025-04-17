@@ -14,6 +14,27 @@ const CreateRecipe = () => {
 	const [insturctionInput, setInstructionInput] = useState<string>("");
 	const [categorieInput, setCategorieInput] = useState<string>("");
 
+	const [foodImg, setFoodImg] = useState<File | null>(null);
+
+	const uploadPhoto = async () => {
+		if (!foodImg) return null;
+
+		const fileName = foodImg.name;
+		const { data, error } = await supabase.storage
+			.from("user-upload-recipe-img")
+			.upload(fileName, foodImg);
+		console.log(data);
+
+		if (error) {
+			console.warn("Fehler beim Upload des Bildes.");
+			return null;
+		}
+		const photoUrl = supabase.storage
+			.from("user-upload-recipe-img")
+			.getPublicUrl(fileName).data.publicUrl;
+		return photoUrl;
+	};
+
 	const addRecipe = async (recipe: NewRecipe) => {
 		const { error: insertError } = await supabase
 			.from("recipes")
@@ -26,8 +47,15 @@ const CreateRecipe = () => {
 		}
 	};
 
-	const handleSubmit = (event: { preventDefault: () => void }) => {
+	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+
+		// & Food Img upload
+		const uploadImgUrl = await uploadPhoto();
+		if (!uploadImgUrl) {
+			return null;
+		}
+
 		addRecipe({
 			name: nameInput,
 			id: crypto.randomUUID(),
@@ -35,6 +63,7 @@ const CreateRecipe = () => {
 			instructions: insturctionInput,
 			description: descriptionInput,
 			category_id: categorieInput,
+			img_url: uploadImgUrl,
 		});
 	};
 
@@ -95,6 +124,17 @@ const CreateRecipe = () => {
 							Main Course
 						</option>
 					</select>
+
+					<input
+						type='file'
+						accept='image/*'
+						onChange={(e) => {
+							if (e.target.files) {
+								setFoodImg(e.target.files[0]);
+							}
+						}}
+						className='border-1 border-pink-200 rounded px-3 py-1 hover:bg-pink-300'
+					/>
 				</div>
 
 				<button type='submit' className='text-xl my-3 hover:text-lime-600'>

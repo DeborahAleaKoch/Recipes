@@ -23,8 +23,34 @@ const EditRecipe: React.FC<Props> = ({ recipe, stopEditing, updateRecipe }) => {
 		recipe.category_id
 	);
 
+	const [newFoodImg, setNewFoodImg] = useState<File | null>(null);
+
+	const uploadPhoto = async () => {
+		if (!newFoodImg) return null;
+
+		const fileName = newFoodImg.name;
+		const { data, error } = await supabase.storage
+			.from("user-kann-bild-bearbeiten")
+			.upload(fileName, newFoodImg);
+		console.log(data);
+
+		if (error) {
+			console.warn("Fehler beim Upload des Bildes.");
+			return null;
+		}
+		const photoUrl = supabase.storage
+			.from("user-kann-bild-bearbeiten")
+			.getPublicUrl(fileName).data.publicUrl;
+		return photoUrl;
+	};
+
 	const handleSubmit = async (event: { preventDefault: () => void }) => {
 		event.preventDefault();
+
+		const uploadImgUrl = await uploadPhoto();
+		if (!uploadImgUrl) {
+			return null;
+		}
 
 		const { error: insertError } = await supabase
 			.from("recipes")
@@ -35,6 +61,7 @@ const EditRecipe: React.FC<Props> = ({ recipe, stopEditing, updateRecipe }) => {
 				instructions: newInstructions,
 				category_id: categorie,
 				// ingredients: recipe.ingredients,
+				img_url: uploadImgUrl,
 			})
 			.eq("id", recipe.id);
 		if (insertError) {
@@ -52,6 +79,17 @@ const EditRecipe: React.FC<Props> = ({ recipe, stopEditing, updateRecipe }) => {
 					hier können rezepte bearbeitet werden
 				</h1>
 				<form action='' className='flex flex-col' onSubmit={handleSubmit}>
+					<input
+						type='file'
+						accept='image/*'
+						onChange={(e) => {
+							if (e.target.files) {
+								setNewFoodImg(e.target.files[0]);
+							}
+						}}
+						className='border-1 border-pink-200 rounded px-3 py-1 hover:bg-pink-300'
+					/>
+
 					<div className='grid grid-cols-2 text-right  gap-3 '>
 						<label htmlFor=''>Name</label>
 						<input

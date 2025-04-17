@@ -58,6 +58,14 @@ const RecipeDetail = () => {
 		<>
 			<div className='mx-5 my-5'>
 				<h1 className='text-center text-4xl'>{recipeDetail.name}</h1>
+				{recipeDetail.img_url && (
+					<img
+						src={recipeDetail.img_url}
+						alt={recipeDetail.name}
+						className='w-[400px]'
+					/>
+				)}
+
 				<h2 className='text-xl '>Portionen: {recipeDetail.servings}</h2>
 				<h2 className='text-xl underline'>Zutaten:</h2>
 				<ul>
