@@ -7,11 +7,11 @@ const Layout = () => {
 	// const location = useLocation();
 
 	return (
-		<>
+		<div className='flex flex-col min-h-screen'>
 			<Header />
 			<Outlet />
 			<Footer />
-		</>
+		</div>
 	);
 };
 
