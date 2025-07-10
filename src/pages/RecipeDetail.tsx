@@ -80,13 +80,13 @@ const RecipeDetail = () => {
 				<div className='flex gap-4'>
 					<button
 						onClick={handleDeleteRecipe}
-						className='border-2 border-red-500 bg-red-200 rounded-2xl px-3 py-1 hover:bg-red-400 hover:ease-in-out hover:delay-100 mt-5'
+						className='border-2 border-red-400  rounded-2xl px-3 py-1 hover:bg-red-400 hover:ease-in-out hover:delay-100 mt-5'
 					>
 						entfernen
 					</button>
 
 					<button
-						className='border-2 border-yellow-500 bg-yellow-200 rounded-2xl px-3 py-1 hover:bg-yellow-400 hover:ease-in-out hover:delay-100 mt-5'
+						className='border-2 border-yellow-400  rounded-2xl px-3 py-1 hover:bg-yellow-400 hover:ease-in-out hover:delay-100 mt-5'
 						onClick={() => setEditing(true)}
 					>
 						bearbeiten

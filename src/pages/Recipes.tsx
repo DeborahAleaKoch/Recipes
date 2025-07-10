@@ -12,9 +12,9 @@ const Recipes = () => {
 		<>
 			<section>
 				<FavouriteRecipes />
-				<h1>
+				{/* <h1>
 					Hier können noch andere Rezept Kacheln hin kommen. Müssen aber nicht.
-				</h1>
+				</h1> */}
 				<div className='flex gap-2.5 justify-evenly'>
 					{categories?.map((categorie) => {
 						return (

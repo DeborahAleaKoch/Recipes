@@ -1,6 +1,6 @@
 const AboutUs = () => {
 	return (
-		<article className='flex flex-col gap-3'>
+		<article className='flex flex-col gap-3 mx-10 my-5 text-xl text-justify'>
 			<p>
 				Hallo, wir sind Amanda und Pedro und freuen uns, unsere Arbeit auf
 				Rezeptwelt vorstellen zu können. Bei der Erkundung dieser erstaunlichen

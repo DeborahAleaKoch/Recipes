@@ -60,53 +60,90 @@ const SignUp = () => {
 				console.log(data);
 				navigate("/profile");
 			}
-		
 		} catch (error) {
 			console.warn(error);
 		}
 	};
-    
+
 	return (
 		<>
-			<form onSubmit={handleSignUp}>
-				<h2>Sign Up</h2>
-				<label htmlFor='email'>Email</label>
-				<input type='text' name='email' placeholder='Email' ref={emailRef} />
+			<form
+				onSubmit={handleSignUp}
+				className='flex flex-col my-5 justify-center items-center gap-2'
+			>
+				<h2 className='text-2xl underline pb-3'>Sign Up</h2>
+				<div className='flex gap-5'>
+					{/* <label htmlFor='email' className="text-left">Email </label> */}
+					<input
+						type='text'
+						name='email'
+						placeholder='Email'
+						ref={emailRef}
+						className='border-1 rounded-xl px-3 py-1'
+					/>
+				</div>
 
-				<label htmlFor='password'>Password</label>
-				<input
-					type='text'
-					name='password'
-					placeholder='Password'
-					ref={passwordRef}
-				/>
+				<div className='flex gap-5'>
+					{/* <label htmlFor='password'>Password</label> */}
+					<input
+						type='text'
+						name='password'
+						placeholder='Password'
+						ref={passwordRef}
+						className='border-1 rounded-xl px-3 py-1'
+						required
+					/>
+				</div>
 
-				<label htmlFor='username'>Username</label>
-				<input
-					type='text'
-					name='username'
-					placeholder='Username'
-					ref={usernameRef}
-				/>
+				<div className='flex gap-5'>
+					{/* <label htmlFor='username'>Username</label> */}
+					<input
+						type='text'
+						name='username'
+						placeholder='Username'
+						ref={usernameRef}
+						className='border-1 rounded-xl px-3 py-1'
+						required
+					/>
+				</div>
+				<div className='flex gap-5'>
+					{/* <label htmlFor='firstname'>First Name</label> */}
+					<input
+						type='text'
+						name='firstname'
+						placeholder='First Name'
+						ref={firstnameRef}
+						className='border-1 rounded-xl px-3 py-1'
+						required
+					/>
+				</div>
 
-				<label htmlFor='firstname'>First Name</label>
-				<input
-					type='text'
-					name='firstname'
-					placeholder='First Name'
-					ref={firstnameRef}
-				/>
+				<div className='flex gap-5'>
+					{/* <label htmlFor='lastname'>Last Name</label> */}
+					<input
+						type='text'
+						name='lastname'
+						placeholder='Last Name'
+						ref={lastnameRef}
+						className='border-1 rounded-xl px-3 py-1'
+						required
+					/>
+				</div>
 
-				<label htmlFor='lastname'>Last Name</label>
-				<input
-					type='text'
-					name='lastname'
-					placeholder='Last Name'
-					ref={lastnameRef}
-				/>
-
-				<button type='submit'>Register</button>
-				<Link to='/login'>Du hast bereits ein Konto?</Link>
+				<button
+					type='submit'
+					className='border-1 rounded-xl border-slate-300 px-4 py-1 hover:font-semibold cursor-pointer mb-4'
+				>
+					Register
+				</button>
+				<p>
+					Du hast bereits ein Konto? Dann klicke
+					<Link to='loginpage' className='font-semibold italic cursor-pointer'>
+						{" "}
+						hier
+					</Link>
+					!
+				</p>
 			</form>
 		</>
 	);
